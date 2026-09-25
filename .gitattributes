@@ -1,0 +1,7 @@
+# Garante finais de linha LF (o hook de pré-commit precisa de LF para rodar em qualquer sistema).
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.sql text eol=lf
+*.yml text eol=lf
+.githooks/* text eol=lf

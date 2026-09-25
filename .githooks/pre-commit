@@ -1,0 +1,14 @@
+#!/bin/sh
+# Hook de pré-commit: recusa o commit se a verificação de segurança falhar.
+# Ative uma vez por clone com:  git config core.hooksPath .githooks
+
+for py in python3 python py; do
+    if command -v "$py" >/dev/null 2>&1; then
+        "$py" tools/check_public_safety.py --staged || exit 1
+        exit 0
+    fi
+done
+
+# Sem Python não há como verificar: por segurança, o commit é bloqueado.
+echo "Python não encontrado: verificação de segurança não pôde ser executada." >&2
+exit 1

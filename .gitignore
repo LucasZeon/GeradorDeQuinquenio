@@ -1,0 +1,158 @@
+# =============================================================================
+# LISTA DE PERMISSÃO (allowlist)
+#
+# Tudo é ignorado por padrão. Só entram no Git os arquivos liberados
+# explicitamente abaixo. Um arquivo novo (inclusive um .env, uma chave, uma
+# planilha ou um banco de dados) NÃO entra por acidente: para publicá-lo é
+# preciso liberá-lo aqui, de propósito, e passar em tools/check_public_safety.py.
+# =============================================================================
+
+*
+
+# --- raiz -------------------------------------------------------------------
+!.gitignore
+!.gitattributes
+!README.md
+!LICENSE
+!SECURITY.md
+!requirements.txt
+!requirements-dev.txt
+
+# --- código e documentação --------------------------------------------------
+!src/
+!src/*.py
+
+!data/
+!data/generate_synthetic_data.py
+
+!sql/
+!sql/*.sql
+
+!docs/
+!docs/*.md
+
+!tests/
+!tests/*.py
+
+# --- ferramentas de segurança e CI ------------------------------------------
+!tools/
+!tools/check_public_safety.py
+
+!.githooks/
+!.githooks/pre-commit
+
+!.github/
+!.github/dependabot.yml
+!.github/workflows/
+!.github/workflows/*.yml
+
+# =============================================================================
+# REDE DE SEGURANÇA (defesa em profundidade)
+#
+# Mesmo que uma liberação acima seja ampliada por engano (ex.: "!src/"),
+# estes padrões voltam a bloquear o que nunca deve ser publicado.
+# Ficam DEPOIS das liberações de propósito: a última regra que casa vence.
+# =============================================================================
+
+# Segredos, credenciais, chaves e configuração local
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.pfx
+*.p12
+*.jks
+*.keystore
+id_rsa*
+id_ed25519*
+*credential*
+*secret*
+*token*
+*password*
+*senha*
+config.json
+config.local.*
+*.local
+.safety-terms.local
+
+# Infraestrutura de banco de dados
+*.ora
+*.enc
+*.enc.json
+oracle_config/
+oracle_client/
+instantclient*/
+wallet/
+
+# Dados: planilhas, tabelas, bancos, dumps, exportações e documentos
+*.xls
+*.xlsx
+*.xlsm
+*.xlsb
+*.csv
+*.tsv
+*.db
+*.sqlite
+*.sqlite3
+*.sql.gz
+*.dump
+*.dmp
+*.bak
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+output/
+
+# Binários, empacotamento e artefatos de build
+*.exe
+*.dll
+*.so
+*.dylib
+*.msi
+*.spec
+*.pyc
+*.pyo
+__pycache__/
+build/
+dist/
+_internal/
+*.egg-info/
+
+# Logs, temporários, IDE e arquivos do sistema
+*.log
+*.tmp
+*.temp
+*.old
+*.orig
+*.swp
+.pytest_cache/
+.venv/
+venv/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============================================================================
+# EXCEÇÃO CONTROLADA (vem por último de propósito, depois da rede de segurança)
+#
+# Capturas de tela do aplicativo com dados 100% sintéticos, revisadas uma a uma.
+# tools/check_public_safety.py só aceita PNG nesta pasta e recusa imagens com
+# metadados (tEXt/iTXt/eXIf).
+# =============================================================================
+!docs/img/
+!docs/img/*.png
